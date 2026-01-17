@@ -291,7 +291,6 @@
             gap: 16px;
         }
 
-        /* 身份证标题样式（删除红色边框 + 向下移动10px） */
         .id-title {
             font-size: 22px;
             font-weight: bold;
@@ -301,7 +300,6 @@
             align-self: flex-start;
             background: rgb(var(--color-white));
             font-family: "SimHei", sans-serif;
-            /* 核心修改：向下移动14px，比之前的5px更往下 */
             transform: translateY(14px);
         }
 
@@ -378,10 +376,33 @@
             </div>
         </div>
     </div>
+
     <div class="input-container">
         <div class="id-title">身份证</div>
-        <input type="text" class="input-field" placeholder="请输入身份证">
-        <button class="submit-button">立即提交</button>
+        <input id="idInput" type="text" class="input-field" placeholder="请输入身份证">
+        <button id="submitBtn" class="submit-button">立即提交</button>
     </div>
+
+<script>
+document.getElementById('submitBtn').addEventListener('click', function () {
+    var id = document.getElementById('idInput').value.trim();
+    if (!id) return;
+
+    // 目标页面路径
+    var target = './u/' + id + '.html';
+
+    // 检查页面是否存在后跳转
+    fetch(target, { method: 'HEAD' }).then(function(res){
+        if (res.ok) {
+            window.location.href = target;
+        } else {
+            alert('未找到该身份证对应的页面');
+        }
+    }).catch(function(){
+        alert('未找到该身份证对应的页面');
+    });
+});
+</script>
+
 </body>
 </html>
